@@ -139,7 +139,9 @@ import joblib
 @st.cache_data
 def load_models():
     try:
-        models_data = joblib.load("recommender_models_light.pkl")
+        BASE_DIR = os.path.dirname(__file__)
+        models_path = os.path.join(BASE_DIR, "recommender_models_light.pkl")
+        models_data = joblib.load(models_path)
         cf_model = CFWrapper(models_data["cf_model"])
         cb_model = CBWrapper(models_data["cb_model"])
         hybrid_model = HybridWrapper(models_data["hybrid_model"])
@@ -772,4 +774,5 @@ st.markdown("""
 📚 BookWise - Powered by Machine Learning | Built with Streamlit<br>
 <small>Discover your next favorite book with personalized recommendations</small>
 </div>
+
 """, unsafe_allow_html=True)
