@@ -77,7 +77,8 @@ Interactive charts to visualize user preferences
 Real-time personalized suggestions
 
 # Run the app
-streamlit run app.py
+locally- streamlit run app.py
+web- https://personalized-book-recommender-system.streamlit.app/
 
 
 📌 Future Improvements
