@@ -8,9 +8,15 @@ from plotly.subplots import make_subplots
 import random
 from collections import defaultdict
 import re
-from models import CollaborativeFilteringSVD
-from models import ContentBasedFiltering
-from models import HybridRecommenderSystem
+import sys
+import os
+
+# Ensure current directory is in Python path
+sys.path.append(os.getcwd())
+
+from models import CollaborativeFilteringSVD, ContentBasedFiltering, HybridRecommenderSystem
+
+
 
 # Page configuration
 st.set_page_config(
@@ -135,18 +141,17 @@ class HybridWrapper:
 
 
 
-import os
 import joblib
 import streamlit as st
 
 @st.cache_data
 def load_models():
     try:
-        # Get the absolute path to the current script
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        
-        # Construct path to the .pkl file dynamically
-        models_path = os.path.join(BASE_DIR, "recommender_models_light.pkl")
+    except NameError:
+        BASE_DIR = os.getcwd()  # fallback for Streamlit Cloud
+
+    models_path = os.path.join(BASE_DIR, "recommender_models_light.pkl")
         
         # Load models
         models_data = joblib.load(models_path)
@@ -785,4 +790,5 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
