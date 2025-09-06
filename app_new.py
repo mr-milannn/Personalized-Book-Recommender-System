@@ -135,22 +135,31 @@ class HybridWrapper:
 
 
 
+import os
 import joblib
+import streamlit as st
+
 @st.cache_data
 def load_models():
     try:
-        BASE_DIR = os.path.dirname(__file__)
+        # Get the absolute path to the current script
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        
+        # Construct path to the .pkl file dynamically
         models_path = os.path.join(BASE_DIR, "recommender_models_light.pkl")
+        
+        # Load models
         models_data = joblib.load(models_path)
         cf_model = CFWrapper(models_data["cf_model"])
         cb_model = CBWrapper(models_data["cb_model"])
         hybrid_model = HybridWrapper(models_data["hybrid_model"])
-  # optional, can build wrapper too
         books_df = models_data["books_df"]
+        
         return cf_model, cb_model, hybrid_model, books_df
     except Exception as e:
         st.error(f"❌ Error loading models: {str(e)}")
         st.stop()
+
 
 
 # Load models
@@ -776,3 +785,4 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
